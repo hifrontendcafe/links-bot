@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import isUrl from 'is-url';
 
 import { Command } from './types';
-import { BotConfig } from './config';
+import config from './config';
 
 dotenv.config();
 const client = new Discord.Client({
@@ -13,7 +13,7 @@ const client = new Discord.Client({
     status: 'online',
     activity: {
       type: 'PLAYING',
-      name: BotConfig.prefix
+      name: config.prefix
     }
   }
 });
@@ -26,12 +26,12 @@ glob.sync('./src/commands/**/*.ts').forEach(async file => {
 const commands: Command[] = [];
 
 client.on('message', message => {
-  if (isUrl(message.content) && message.channel.id === BotConfig.channel) {
+  if (isUrl(message.content) && message.channel.id === config.channel) {
     const add = commands.find(c => c.name === 'add');
     add?.run(message, [message.content]);
   }
   const [prefix, userCommand, ...args] = message.content.split(' ');
-  if (prefix !== BotConfig.prefix) return;
+  if (prefix !== config.prefix) return;
 
   const command = commands.find(c => userCommand === c.command);
   if (!command) return;

@@ -1,5 +1,5 @@
 import { Command, Run } from '../types';
-import { BotConfig } from '../config';
+import config from '../config';
 
 export default class Set implements Command {
   name = 'set';
@@ -8,7 +8,7 @@ export default class Set implements Command {
 
   run: Run = async (message, args) => {
     if (args[0] === 'prefix') {
-      BotConfig.prefix = args[1];
+      config.prefix = args[1];
       await message.client.user?.setActivity(args[1], { type: 'PLAYING' });
     } else if (args[0] === 'channel') {
       const channel = message.mentions.channels.first();
@@ -19,7 +19,7 @@ export default class Set implements Command {
         return;
       }
 
-      BotConfig.channel = channel.id;
+      config.channel = channel.id;
     }
 
     await message.react('✅');

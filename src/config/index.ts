@@ -1,4 +1,4 @@
-export class BotConfig {
-  static prefix: string = '-lb';
-  static channel: string;
-}
+export default {
+  prefix: "-lb",
+  channel: ''
+};
